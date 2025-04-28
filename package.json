@@ -1,0 +1,22 @@
+{
+  "name": "module-federation",
+  "version": "1.0.0",
+  "description": "디디가 진행하는 모.듈.페.더.레.이.션. 세.미.나.",
+  "scripts": {
+    "install:deps": "yarn workspaces foreach --all install",
+    "postinstall:deps": "yarn workspaces foreach --all run build",
+    "dev": "yarn workspaces foreach --all --parallel run dev",
+    "build": "yarn workspaces foreach --all run build",
+    "preview": "yarn workspaces foreach --all --parallel run preview",
+    "clean": "yarn workspaces foreach --all run clean"
+  },
+  "author": "CDD",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*"
+  ],
+  "packageManager": "yarn@4.9.1",
+  "dependencies": {
+    "@module-federation/vite": "^1.2.6"
+  }
+}
