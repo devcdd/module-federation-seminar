@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { lazy, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import "./App.css";
+
+// Remote Apps
+const App1 = lazy(() => import("app1/app"));
+const App2 = lazy(() => import("app2/app"));
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {/* Remote Apps */}
+      <div style={{ marginTop: "2rem" }}>
+        <h2>Remote Apps:</h2>
+        <ErrorBoundary
+          fallback={
+            <div style={{ padding: "1rem", color: "#666" }}>
+              App1이 실행되고 있지 않습니다. (port: 4001)
+            </div>
+          }
+        >
+          <Suspense fallback={<div>Loading App1...</div>}>
+            <App1 />
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary
+          fallback={
+            <div style={{ padding: "1rem", color: "#666" }}>
+              App2가 실행되고 있지 않습니다. (port: 4002)
+            </div>
+          }
+        >
+          <Suspense fallback={<div>Loading App2...</div>}>
+            <App2 />
+          </Suspense>
+        </ErrorBoundary>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
+
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
